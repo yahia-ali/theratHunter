@@ -7,10 +7,10 @@ import requests
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
 # Use my OTX API Key
-otx = OTXv2("c85a4733d2eecf9f5b2e7021b0a6bca997e45ebb90fb01ba5d6a59618781c3ce")
+otx = OTXv2("OTX_KEY")
 
 # Use my XFE API Key
-auth_header = {'authorization': 'Basic NjQ3MTBiMGItZjBlZi00MGU2LWEyODEtNWE0NmU5ZGZiYjg5OjRkMmE2YjgwLWFkMDAtNGZlNC1iNmU1LTk5NTlhZjk0Njk2NQ=='}
+auth_header = {'authorization': 'Basic YOUR_AUTHORIZATION_KEY_HERE_in_Base64'}
 
 # XFE IP Reputation URL
 IPReputationURL = "https://api.xforce.ibmcloud.com/api/ipr/"
