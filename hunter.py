@@ -1,16 +1,22 @@
-from OTXv2 import OTXv2
-from tinydb import TinyDB, Query
+'''
+
+Threat Hunter Code
+
+'''
 import datetime
 import requests
+from OTXv2 import OTXv2
+from tinydb import TinyDB, Query
 
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
 # Use my OTX API Key
-otx = OTXv2("OTX_KEY")
+otx = OTXv2("c85a4733d2eecf9f5b2e7021b0a6bca997e45ebb90fb01ba5d6a59618781c3ce")
 
 # Use my XFE API Key
-auth_header = {'authorization': 'Basic YOUR_AUTHORIZATION_KEY_HERE_in_Base64'}
+auth_header = {'authorization': 'Basic \
+NjQ3MTBiMGItZjBlZi00MGU2LWEyODEtNWE0NmU5ZGZiYjg5OjRkMmE2YjgwLWFkMDAtNGZlNC1iNmU1LTk5NTlhZjk0Njk2NQ=='}
 
 # XFE IP Reputation URL
 IPReputationURL = "https://api.xforce.ibmcloud.com/api/ipr/"
@@ -47,11 +53,14 @@ def main():
         for currentIndicator in currentPulse['indicators']:
             if currentIndicator['type'] == "IPv4":
                 creationDateComponents = currentIndicator["created"].split('T')[0].split('-')
-                creationDate = datetime.date(int(creationDateComponents[0]), int(creationDateComponents[1]), int(creationDateComponents[2]))
-                if creationDate >= datetime.date(int(date_fields[0]), int(date_fields[1]), int(date_fields[2])):
+                creationDate = datetime.date(int(creationDateComponents[0]), \
+                        int(creationDateComponents[1]), int(creationDateComponents[2]))
+                if creationDate >= datetime.date(int(date_fields[0]), \
+                        int(date_fields[1]), int(date_fields[2])):
                     if currentIndicator['indicator'] not in IP_List:
                         IP_List.append(currentIndicator['indicator'])
-                        my_database.insert({'type': 'IPv4', 'value': currentIndicator['indicator'], 'threat-actor': currentPulse['adversary']})
+                        my_database.insert({'type': 'IPv4', 'value': \
+                        currentIndicator['indicator'], 'threat-actor': currentPulse['adversary']})
 
     print("Number of IOCs before cross-checking with different CTI feeds: "+ str(len(IP_List)))
 
@@ -85,11 +94,13 @@ def main():
             my_database.update({"abuseCH_Score": 0}, updateIOC.value == eachIP)
         else:
             print("abuse.ch Score:\t" + str(abuseCH_Result["data"][0]["confidence_level"]/10))
-            my_database.update({"abuseCH_Score": abuseCH_Result["data"][0]["confidence_level"]/10}, updateIOC.value == eachIP)
+            my_database.update({"abuseCH_Score": abuseCH_Result["data"][0]["confidence_level"]/10}\
+                               , updateIOC.value == eachIP)
             finalScore += abuseCH_Result["data"][0]["confidence_level"]/10
         print("SANS ISC status: " + str(SANS_ISC_Result["ip"]["attacks"]))
         if str(SANS_ISC_Result["ip"]["attacks"]) != "None":
-            my_database.update({"SANS_ISC_Score": SANS_ISC_Result["ip"]["attacks"]/100}, updateIOC.value == eachIP)
+            my_database.update({"SANS_ISC_Score": SANS_ISC_Result["ip"]["attacks"]/100},\
+                               updateIOC.value == eachIP)
             finalScore += SANS_ISC_Result["ip"]["attacks"]/100
             if finalScore > 10:
                 finalScore = 10
