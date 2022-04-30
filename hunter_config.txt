@@ -1,0 +1,17 @@
+#######################
+#       CONFIG        #
+#######################
+# How to edit the file?
+#######################
+# INDUSTRY OPTIONS: Eductaion, Healthcare, Aerospace, Government
+# SOURCES: Comment the lines that you want to exclude
+# IOCS: Options: IPv4 and domain
+# STARTDATE: YYYY-MM-DD
+#######################
+#INDUSTRY
+Aerospace
+##########
+
+#STARTDATE
+2021-04-01
+##########
